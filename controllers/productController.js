@@ -222,11 +222,10 @@ productController.checkItemsStock= async (items)=>{
 			const stockCheck = await productController.checkStock(item)
 			if(!stockCheck.isVerify){
 				insufficientStockItems.push({item, message:stockCheck.message})
-			} else{
-				await productController.processStock(item)
-			}
+			} 
 		})
 	)
+	if (insufficientStockItems.length === 0) await productController.processStock(item)
 	return insufficientStockItems;
 }
 

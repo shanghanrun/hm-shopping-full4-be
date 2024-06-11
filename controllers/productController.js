@@ -225,7 +225,13 @@ productController.checkItemsStock= async (items)=>{
 			} 
 		})
 	)
-	if (insufficientStockItems.length === 0) await productController.processStock(item)
+	if (insufficientStockItems.length === 0) {
+		await Promise.all(
+			items.map(async(item)=>{
+				await productController.processStock(item)
+			})
+		)
+	}
 	return insufficientStockItems;
 }
 

@@ -69,11 +69,14 @@ orderController.getOrderList=async(req, res)=>{
 		let query = Order.find(cond)
 		let response = {status:'success'}
 
+		//이부분을 if(page) 바깥으로 뺐다.
+		const totalItemNum = await Order.find(cond).countDocuments()
+		const totalPages = Math.ceil(totalItemNum / PAGE_SIZE)
+			response.totalPageNum = totalPages
+		//
+		
 		if(page){
 			query.skip((page-1)*PAGE_SIZE).limit(PAGE_SIZE)
-			const totalItemNum = await Order.find(cond).countDocuments()
-			const totalPages = Math.ceil(totalItemNum / PAGE_SIZE)
-			response.totalPageNum = totalPages
 		}
 
 		const orderList = await query.exec()

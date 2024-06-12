@@ -9,10 +9,12 @@ productRouter.post('/', authController.authenticate, authController.checkAdminPe
 productRouter.post('/batch', authController.authenticate, authController.checkAdminPermission, upload.single('file'), productController.batchCreateProducts)
 
 productRouter.get('/', productController.getProductList)
+productRouter.get('/low-stock-products', productController.getLowStockProducts)
+
 productRouter.get('/:id', productController.getProductById)
 productRouter.delete('/:id', authController.authenticate, authController.checkAdminPermission, productController.deleteProduct)
 productRouter.put('/:id', authController.authenticate, authController.checkAdminPermission, productController.updateProduct)
 
-productRouter.get('/low-stock-products', productController.getLowStockProducts)
+
 
 module.exports =productRouter

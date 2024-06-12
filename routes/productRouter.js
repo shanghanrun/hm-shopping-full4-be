@@ -13,4 +13,6 @@ productRouter.get('/:id', productController.getProductById)
 productRouter.delete('/:id', authController.authenticate, authController.checkAdminPermission, productController.deleteProduct)
 productRouter.put('/:id', authController.authenticate, authController.checkAdminPermission, productController.updateProduct)
 
+productRouter.get('/low-stock-products', productController.getLowStockProducts)
+
 module.exports =productRouter

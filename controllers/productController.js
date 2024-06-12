@@ -230,4 +230,29 @@ productController.checkItemsStock= async (items)=>{
 }
 
 
+productController.getLowStockProducts = async (req, res) => {
+  try {
+    const sizes = ['xs', 's', 'm', 'l', 'xl'];
+    const condition = {
+      isDeleted: false,
+      $or: sizes.map(size => ({ [`stock.${size}`]: { $lte: 5 } }))
+    };
+
+    const productList = await Product.find(condition).exec();
+    const totalCount = await Product.find(condition).countDocuments();
+
+    const response = {
+      status: "success",
+      data: productList,
+      totalProductCount: totalCount
+    };
+
+    res.status(200).json(response);
+  } catch (e) {
+    res.status(400).json({ status: 'fail', error: e.message });
+  }
+};
+
+
+
 module.exports = productController;

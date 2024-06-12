@@ -65,6 +65,10 @@ cartController.getCart=async(req, res)=>{
 		const userId = req.userId
 		const cart = await Cart.findOne({userId}).populate('items.productId').populate('userId')
 
+		if (!cart) {
+			return res.status(404).json({ status: 'fail', message: 'Cart not found' });
+		}
+
 		res.status(200).json({status:'success', data:cart, cartItemQty:cart?.items.length })
 	}catch(e){
 		res.status(400).json({status:'fail', error:e.message})

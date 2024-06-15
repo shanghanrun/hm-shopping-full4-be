@@ -203,7 +203,7 @@ productController.checkStock=async(item)=>{
 			return {isVerify: true}
 		}
 	} catch(e){
-		res.status(400).json(status:'fail', error:e.message)
+		res.status(400).json({status:'fail', error:e.message})
 	}
 }
 
@@ -215,7 +215,7 @@ productController.processStock=async(item)=>{
 		product.stock = newStock
 		await product.save()
 	} catch(e){
-		res.status(400).json(status:'fail', error:e.message)
+		res.status(400).json({status:'fail', error:e.message})
 	}
 }
 productController.checkItemsStock= async (items)=>{
@@ -238,7 +238,7 @@ productController.checkItemsStock= async (items)=>{
 		}
 		return insufficientStockItems;
 	} catch(e){
-		res.status(400).json(status:'fail', error:e.message)
+		res.status(400).json({status:'fail', error:e.message})
 	}
 }
 

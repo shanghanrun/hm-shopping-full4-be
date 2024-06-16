@@ -80,14 +80,14 @@ userController.loginWithGoogle= async(req, res)=>{
 			audience: GOOGLE_CLIENT_ID
 		})
 		const {email, name} = tokenInfo.getPayload()
-		const user = await User.findOne({email})
+		let user = await User.findOne({email})
 		console.log('찾은 email: name = ', email, ' : ', name)
 		console.log('찾은 유저 정보 :', user )
 		if(!user){ 
 			// user를 생성한다.
 			const randomPassword = ''+Math.floor(Math.random()*100000) //문자열로 만들기
 			const hash = bcrypt.hashSync(randomPassword, saltRounds)
-			const user = new User({email,password: hash, name})
+			user = new User({email,password: hash, name})
 			await user.save() 	
 			console.log('생성된 user정보 :', user)
 		} 
